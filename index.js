@@ -24,8 +24,9 @@ server.get('/user/:id', (req, res) => {
     db.findById(id).then(user => {
         if (!user) {
             res.status(404).json({ message: "The user with the specified ID does not exist." })
+        } else {
+            res.send(user)
         }
-        res.send(user)
     })
     .catch(err => res.json({ message: "error finding the user" }))
 })
@@ -35,8 +36,9 @@ server.post('/users', (req, res) => {
     db.insert(newUser).then(user => {
         if(!user.name || !user.bio) {
             res.status(500).json({ errorMessage: "Please provide name and bio for the user." })
+        } else {
+            res.status(201).json(user)
         }
-        res.status(201).json(user)
     })
     .catch(err => res.json({ errorMessage: "Error creating the user." }))
 })
@@ -47,8 +49,9 @@ server.put('/user/:id', (req, res) => {
     db.update(id, newUser).then(user => {
         if (!user) {
             res.status(404).json({ message: "The user with the specified ID does not exist."})
+        } else {
+            res.json(user)
         }
-        res.json(user)
     })
     .catch(err => res.json({ message: "Error updating the user."}))
 })
@@ -58,8 +61,9 @@ server.delete('/user/:id', (req, res) => {
     db.remove(id).then(user => {
         if (!user) {
             res.status(404).json({ message: "The user with the specified ID does not exist."})
+        } else {
+            res.json(user)
         }
-        res.json(user)
     })
     .catch(err => res.json({ message: "Error deleting the user."}))
 })
